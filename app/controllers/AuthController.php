@@ -5,7 +5,7 @@ class AuthController
     public function index()
     {
         
-        require __DIR__ . '/../views/login.php';
+        require __DIR__ . '/../views/auth/login.php';
 
     }
 
@@ -22,7 +22,7 @@ class AuthController
                 $user = $userModel->findByEmail($email);
     
                 if ($user && password_verify($password, $user['password'])) {
-                    session_start();
+                    
                     $_SESSION['user'] = $user;
                     
                     // Redireciona para a dashboard após login bem-sucedido
@@ -45,7 +45,7 @@ class AuthController
 
     public function register(){
 
-        require __DIR__ . '/../views/register.php';
+        require __DIR__ . '/../views/auth/register.php';
 
     }
 
@@ -82,4 +82,21 @@ class AuthController
             echo "Método não permitido.";
         }
     }
+
+    public function logout()
+    {
+        
+    
+        // Remover apenas o usuário da sessão (opcional)
+        unset($_SESSION['user']);
+    
+        // Destrói a sessão por completo
+        session_unset(); 
+        session_destroy();
+    
+        // Redireciona para login ou home
+        header("Location: /");
+        exit;
+    }
+    
 }

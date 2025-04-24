@@ -13,9 +13,9 @@
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
  
         <h2 class="text-2xl font-semibold text-center mb-6">Registrar</h2>
-        <a href="/register">
+        
   <img src="/public/finnet.jpg" alt="Registrar" class="rounded-xl shadow-lg hover:opacity-80 transition-opacity duration-300 w-['250'] ml-auto mb-2" >
-</a>  
+
         <?php
             if (isset($_GET['error'])) {
                 echo '<div class="bg-red-500 text-white p-3 rounded-md text-center mb-4">' . htmlspecialchars($_GET['error']) . '</div>';
@@ -45,7 +45,7 @@
             <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md">Registrar</button>
         </form>
         <div class="mt-4 text-center">
-  <a href="/views/login.php" class="text-blue-500 hover:underline">
+  <a href="/" class="text-blue-500 hover:underline">
     Já possui uma conta? Faça login
   </a>
     </div>

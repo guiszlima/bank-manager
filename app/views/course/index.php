@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos - Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- Container Principal -->
+    <div class="flex h-screen">
+        
+        <!-- Menu Lateral -->
+        <div class="w-64 bg-blue-600 text-white p-6 flex flex-col">
+            <h2 class="text-2xl font-bold mb-8">Dashboard</h2>
+            <ul>
+                <li>
+                    <a href="/dashboard" class="block py-2 px-4 hover:bg-blue-700 rounded capitalize">Início</a>
+                </li>
+                <li>
+                    <a href="/estudante" class="block py-2 px-4 hover:bg-blue-700 rounded capitalize">Alunos</a>
+                </li>
+                <li>
+                    <a href="/cursos" class="block py-2 px-4 hover:bg-blue-700 rounded capitalize">Cursos</a>
+                </li>
+                <li>
+                    <a href="/matricula" class="block py-2 px-4 hover:bg-blue-700 rounded capitalize">Matrícula</a>
+                </li>
+            </ul>
+            <div class="mt-auto">
+                <a href="/logout" class="block py-2 px-4 bg-red-500 hover:bg-red-600 rounded mt-4 text-center">Sair</a>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="flex-1 p-8">
+            <h1 class="text-3xl font-bold mb-4 capitalize">Cursos</h1>
+
+            <p class="text-lg mb-8">Gerencie as áreas de cursos do sistema.</p>
+
+            <!-- Botão para Criar Curso -->
+            <div class="mb-6">
+                <a href="/criar-curso">
+                    <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">
+                        Criar Curso
+                    </button>
+                </a>
+            </div>
+
+            <!-- Tabela de Cursos -->
+            <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
+                <h2 class="text-2xl font-semibold mb-4">Cursos Cadastrados</h2>
+
+                <!-- Tabela -->
+                <table class="min-w-full table-auto">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 border-b">ID</th>
+                            <th class="px-4 py-2 border-b">Título</th>
+                            <th class="px-4 py-2 border-b">Descrição</th>
+                            <th class="px-4 py-2 border-b">Criado em</th>
+                            <th class="px-4 py-2 border-b">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($courses as $course): ?>
+                            <tr>
+                                <td class="px-4 py-2 border-b"><?php echo htmlspecialchars($course['id']); ?></td>
+                                <td class="px-4 py-2 border-b"><?php echo htmlspecialchars($course['title']); ?></td>
+                                <td class="px-4 py-2 border-b"><?php echo htmlspecialchars($course['descricao']); ?></td>
+                                <td class="px-4 py-2 border-b"><?php echo htmlspecialchars($course['created_at']); ?></td>
+                                <td class="px-4 py-2 border-b">
+                                    <a href="/curso/edit/<?php echo $course['id']; ?>"  class="text-blue-500 hover:underline">Editar</a> | 
+                                <a href="/curso/delete/<?php echo $course['id']; ?>" class="text-red-500 hover:underline"
+                                    onclick="return confirm('Deseja realmente excluir este curso?');">
+                                    Deletar
+                                </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -10,12 +10,13 @@
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 class="text-2xl font-semibold text-center mb-6">Login</h2>
         <a href="/register">
-  <img src="/public/finnet.jpg" alt="Registrar" class="rounded-xl shadow-lg hover:opacity-80 transition-opacity duration-300 w-['250'] ml-auto mb-2" >
+  <img src="/public/finnet.jpg" alt="Registrar" class="rounded-xl shadow-lg hover:opacity-50 hover:scale-115 transition-opacity duration-300 w-['250'] ml-auto mb-2" >
 </a>  
         <?php
             if (isset($_GET['error'])) {
                 echo '<div class="bg-red-500 text-white p-3 rounded-md text-center mb-4">' . htmlspecialchars($_GET['error']) . '</div>';
             } ?>
+
 
         <form action="/login_process" method="POST">
             <div class="mb-4">
