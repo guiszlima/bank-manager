@@ -9,7 +9,8 @@ class MatriculaController
         $matriculaModel = new Matricula();
         $courseModel = new Course();
         $matriculas = $matriculaModel->getAll();
-        $courses = $courseModel->getAll();
+        $nomeBusca = $_GET['busca_nome'] ?? null;
+        $courses = $courseModel->getAll($nomeBusca);
         $user = $_SESSION['user'];
         require __DIR__ . '/../views/matricula/index.php';
     }
@@ -39,11 +40,10 @@ class MatriculaController
     public function edit($id)
     {
         $matriculaModel = new Matricula();
-        $matricula = $matriculaModel->getById($id);
-        $courseModel = new Course();
-        $courses = $courseModel->getAll(); // Obtendo todos os cursos
-        $studentModel = new Student();
-        $students = $studentModel->getAll(); // Obtendo todos os estudantes
+
+        $searchQuery = isset($_GET['search']) ? $_GET['search'] : null;
+        $matriculas = $matriculaModel->getByCourseId($id, $searchQuery);
+        
         $user = $_SESSION['user'];
         require __DIR__ . '/../views/matricula/edit.php';
     }
@@ -53,16 +53,19 @@ class MatriculaController
     {
         $matriculaModel = new Matricula();
         $matriculaModel->update($id, $course_id, $student_id);
-        header("Location: /matriculas");
+        header("Location: /matricula");
         exit;
     }
 
     // Deleta uma matrícula
     public function delete($id)
     {
+        
         $matriculaModel = new Matricula();
-        $matriculaModel->delete($id);
-        header("Location: /matriculas");
+        $teste = $matriculaModel->delete($id);
+        
+;
+        header("Location: /matricula");
         exit;
     }
 }

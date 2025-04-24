@@ -88,7 +88,7 @@ if (isset($_SESSION['user'])) {
     // Rota POST para atualizar o curso
     if ($uri === '/cursos/update' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $controller = new CourseController();
-        $controller->update($_POST);
+        $controller->update($_POST['id'], $_POST['nome'], $_POST['descricao']);
         exit;
     }
     
@@ -128,6 +128,16 @@ if (isset($_SESSION['user'])) {
         $controller->edit($id);  // O $id é passado para o método edit do controlador
         exit;
     }
+    if (preg_match('#^/matricula/delete/(\d+)$#', $uri, $matches) && $_SERVER['REQUEST_METHOD'] === 'GET') {
+        // O ID da matrícula é capturado via expressões regulares
+        $id = $matches[1];
+        
+        // Instancia o controlador e chama o método edit com o ID da matrícula
+        $controller = new MatriculaController();
+        $controller->delete($id);  
+        exit;
+    }
+    
     if ($uri === '/logout') {
         
         $controller = new AuthController();

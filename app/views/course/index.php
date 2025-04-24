@@ -50,7 +50,27 @@
                     </button>
                 </a>
             </div>
-
+            <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
+    <form method="GET" action="/cursos">
+        <label for="busca_nome" class="block text-gray-700 text-sm font-bold mb-2">Buscar por nome do curso:</label>
+        <div class="flex items-center gap-2">
+            <input
+                type="text"
+                name="busca_nome"
+                id="busca_nome"
+                value="<?= isset($_GET['busca_nome']) ? htmlspecialchars($_GET['busca_nome']) : '' ?>"
+                class="border border-gray-300 rounded-lg px-4 py-2 w-full"
+                placeholder="Digite o nome do curso"
+            >
+            <button
+                type="submit"
+                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+            >
+                Buscar
+            </button>
+        </div>
+    </form>
+</div>
             <!-- Tabela de Cursos -->
             <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
                 <h2 class="text-2xl font-semibold mb-4">Cursos Cadastrados</h2>

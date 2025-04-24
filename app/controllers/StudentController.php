@@ -8,7 +8,8 @@ class StudentController{
     public function index()
     {
         $studentModel = new Student();
-        $students = $studentModel->getAll();
+        $searchQuery = isset($_GET['search']) ? $_GET['search'] : null;
+        $students = $studentModel->getAll($searchQuery);
         $user = $_SESSION['user'];
         require __DIR__ . '/../views/student/index.php';
     }

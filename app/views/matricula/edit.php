@@ -39,46 +39,32 @@
         <!-- Conteúdo Principal -->
         <div class="flex-1 p-8">
             <h1 class="text-3xl font-bold mb-4 capitalize">Editar Curso</h1>
-
-            <!-- Formulário de Edição do Curso -->
-            <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
-                <h2 class="text-2xl font-semibold mb-4">Detalhes do Curso</h2>
-
-                <!-- Formulário de Edição -->
-                <form action="/cursos/update/<?php echo $course['id']; ?>" method="POST">
-                    <div class="mb-4">
-                        <label for="title" class="block text-sm font-medium text-gray-700">Título</label>
-                        <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($course['title']); ?>" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="descricao" class="block text-sm font-medium text-gray-700">Descrição</label>
-                        <textarea id="descricao" name="descricao" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required><?php echo htmlspecialchars($course['descricao']); ?></textarea>
-                    </div>
-
-                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Atualizar Curso</button>
-                </form>
-            </div>
-
+            <div class="mb-6">
+        <form method="GET" action="/matricula/ver/<?php echo $courseId; ?>" class="flex items-center space-x-4">
+            <input type="text" name="search" placeholder="Pesquisar por nome do aluno..." class="border px-4 py-2 rounded-lg w-1/3" value="<?php echo htmlspecialchars($searchQuery ?? ''); ?>">
+            <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Pesquisar</button>
+        </form>
+    </div>
             <!-- Tabela de Matrículas -->
             <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
                 <h2 class="text-2xl font-semibold mb-4">Matrículas do Curso</h2>
 
-                <table class="min-w-full table-auto">
+                   <table class="min-w-full table-auto">
                     <thead>
                         <tr>
                             <th class="px-4 py-2 border-b text-left">Aluno</th>
-                            <th class="px-4 py-2 border-b text-left">Data da Matrícula</th>
                             <th class="px-4 py-2 border-b text-left">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($matriculas as $matricula): ?>
+                            
+                        
+
                             <tr>
                                 <td class="px-4 py-2 border-b"><?php echo htmlspecialchars($matricula['student_name']); ?></td>
-                                <td class="px-4 py-2 border-b"><?php echo htmlspecialchars($matricula['data_matricula']); ?></td>
                                 <td class="px-4 py-2 border-b">
-                                    <a href="/matricula/ver/<?php echo $matricula['id']; ?>" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Ver</a>
+                                    <a href="/matricula/delete/<?php echo $matricula['matricula_id']; ?>" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Deletar</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

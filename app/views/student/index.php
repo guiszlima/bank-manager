@@ -53,6 +53,10 @@
             Criar Aluno
         </button>
     </a>
+    <form method="GET" action="/estudante" class="flex items-center space-x-4 mb-4">
+    <input type="text" name="search" placeholder="Pesquisar por nome ou e-mail..." class="border px-4 py-2 rounded-lg w-1/3" value="<?php echo htmlspecialchars($searchQuery ?? ''); ?>">
+    <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Pesquisar</button>
+</form>
             <!-- Tabela de Alunos -->
             <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
                 <h2 class="text-2xl font-semibold mb-4">Lista de Alunos</h2>

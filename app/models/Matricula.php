@@ -27,9 +27,29 @@ class Matricula
     // Método para criar uma nova matrícula
     public function create($course_id, $student_id)
     {
-        $stmt = $this->pdo->prepare("INSERT INTO matriculas (course_id, student_id) VALUES (?, ?)");
-        return $stmt->execute([$course_id, $student_id]);
+        // Verificar se o aluno já está matriculado neste curso
+        $stmt = $this->pdo->prepare("
+            SELECT COUNT(*) FROM matriculas 
+            WHERE student_id = ? AND course_id = ?
+        ");
+        $stmt->execute([$student_id, $course_id]);  // Corrigido: usar $student_id e $course_id
+        
+        $count = $stmt->fetchColumn();
+        
+        if ($count > 0) {
+            // Se o aluno já estiver matriculado no curso, você pode tratar o erro
+            
+            return;
+        }
+        
+        // Caso contrário, faça a matrícula
+        $stmt = $this->pdo->prepare("
+            INSERT INTO matriculas (student_id, course_id, data_matricula)
+            VALUES (?, ?, NOW())
+        ");
+        $stmt->execute([$course_id,$student_id]);  // Corrigido: usar $student_id e $course_id
     }
+    
 
     // Método para obter uma matrícula pelo ID
     public function getById($id)
@@ -42,18 +62,35 @@ class Matricula
     // Método para obter todas as matrículas de um curso
   // Matricula.php
 
-public function getByCourseId($courseId)
+  public function getByCourseId($courseId, $searchQuery = null)
 {
-    $stmt = $this->pdo->prepare("
-        SELECT students.name AS student_name, students.id AS student_id
+    $sql = "
+        SELECT matriculas.id AS matricula_id, students.nome AS student_name, students.email AS student_email, students.id AS student_id
         FROM matriculas
         JOIN students ON matriculas.student_id = students.id
         WHERE matriculas.course_id = ?
-    ");
-    $stmt->execute([$courseId]);
+    ";
+
+    // Se houver um termo de pesquisa, adicione à consulta
+    if ($searchQuery) {
+        $sql .= " AND (students.nome LIKE :searchQuery OR students.email LIKE :searchQuery)";
+    }
+
+    // Prepara a consulta
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindValue(1, $courseId, PDO::PARAM_INT);
+
+    // Se houver pesquisa, vincule o parâmetro
+    if ($searchQuery) {
+        $stmt->bindValue(':searchQuery', "%{$searchQuery}%", PDO::PARAM_STR);
+    }
+
+    // Executa a consulta
+    $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+  
 
     // Método para obter todas as matrículas de um estudante
     public function getByStudentId($student_id)

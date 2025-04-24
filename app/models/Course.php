@@ -9,11 +9,18 @@ class Course
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    public function getAll()
-    {
+    public function getAll($titulo = null)
+{
+    if ($titulo) {
+        $stmt = $this->pdo->prepare("SELECT * FROM courses WHERE title LIKE ?");
+        $stmt->execute(["%{$titulo}%"]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
         $stmt = $this->pdo->query("SELECT * FROM courses");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+}
+
 
     public function create($nome, $descricao)
     {
@@ -30,7 +37,7 @@ class Course
 
     public function update($id, $nome, $descricao)
     {
-        $stmt = $this->pdo->prepare("UPDATE courses SET nome = ?, descricao = ? WHERE id = ?");
+        $stmt = $this->pdo->prepare("UPDATE courses SET title = ?, descricao = ? WHERE id = ?");
         return $stmt->execute([$nome, $descricao, $id]);
     }
 

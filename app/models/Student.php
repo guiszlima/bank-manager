@@ -26,14 +26,25 @@ class Student
     }
 
     // Método para obter todos os alunos
-    public function getAll()
-    {
-        $sql = "SELECT * FROM students";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
+    public function getAll($searchQuery = null)
+{
+    $sql = "SELECT * FROM students";
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Se houver um termo de pesquisa, adicione a condição WHERE
+    if ($searchQuery) {
+        $sql .= " WHERE nome LIKE :searchQuery OR email LIKE :searchQuery";
     }
+
+    $stmt = $this->pdo->prepare($sql);
+
+    // Se houver um termo de pesquisa, vinculamos o parâmetro
+    if ($searchQuery) {
+        $stmt->bindValue(':searchQuery', "%{$searchQuery}%", PDO::PARAM_STR);
+    }
+
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
     // Método para obter um aluno por ID
     public function getById($id)

@@ -6,7 +6,8 @@ class CourseController
     public function index()
     {
         $courseModel = new Course();
-        $courses = $courseModel->getAll();
+        $nomeBusca = $_GET['busca_nome'] ?? null;
+        $courses = $courseModel->getAll($nomeBusca);
         $user = $_SESSION['user'];
         require __DIR__ . '/../views/course/index.php';
     }
@@ -35,6 +36,7 @@ class CourseController
 
     public function update($id, $nome, $descricao)
     {
+        
         $courseModel = new Course();
         $courseModel->update($id, $nome, $descricao);
         header("Location: /cursos");
