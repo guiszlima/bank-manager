@@ -40,8 +40,9 @@ class MatriculaController
     public function edit($id)
     {
         $matriculaModel = new Matricula();
-
         $searchQuery = isset($_GET['search']) ? $_GET['search'] : null;
+    
+        // Passa o ID do curso e o termo de pesquisa para o método que consulta as matrículas
         $matriculas = $matriculaModel->getByCourseId($id, $searchQuery);
         
         $user = $_SESSION['user'];

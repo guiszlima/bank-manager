@@ -64,29 +64,34 @@ class Matricula
 
   public function getByCourseId($courseId, $searchQuery = null)
 {
+    // Monta a consulta SQL
     $sql = "
         SELECT matriculas.id AS matricula_id, students.nome AS student_name, students.email AS student_email, students.id AS student_id
         FROM matriculas
         JOIN students ON matriculas.student_id = students.id
-        WHERE matriculas.course_id = ?
+        WHERE matriculas.course_id = :courseId
     ";
 
-    // Se houver um termo de pesquisa, adicione à consulta
+    // Se houver um termo de pesquisa, adiciona ao filtro SQL
     if ($searchQuery) {
         $sql .= " AND (students.nome LIKE :searchQuery OR students.email LIKE :searchQuery)";
     }
 
     // Prepara a consulta
     $stmt = $this->pdo->prepare($sql);
-    $stmt->bindValue(1, $courseId, PDO::PARAM_INT);
+    
+    // Vincula o parâmetro courseId
+    $stmt->bindValue(':courseId', $courseId, PDO::PARAM_INT);
 
-    // Se houver pesquisa, vincule o parâmetro
+    // Se houver pesquisa, vincula o parâmetro searchQuery
     if ($searchQuery) {
         $stmt->bindValue(':searchQuery', "%{$searchQuery}%", PDO::PARAM_STR);
     }
 
     // Executa a consulta
     $stmt->execute();
+    
+    // Retorna os resultados
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 

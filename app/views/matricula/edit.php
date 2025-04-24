@@ -38,13 +38,15 @@
 
         <!-- Conteúdo Principal -->
         <div class="flex-1 p-8">
-            <h1 class="text-3xl font-bold mb-4 capitalize">Editar Curso</h1>
-            <div class="mb-6">
-        <form method="GET" action="/matricula/ver/<?php echo $courseId; ?>" class="flex items-center space-x-4">
+    <h1 class="text-3xl font-bold mb-4 capitalize">Editar Curso</h1>
+    <div class="mb-6">
+        <!-- Formulário de Pesquisa -->
+        <form method="GET" action="/matricula/ver/<?php echo $id; ?>" class="flex items-center space-x-4">
             <input type="text" name="search" placeholder="Pesquisar por nome do aluno..." class="border px-4 py-2 rounded-lg w-1/3" value="<?php echo htmlspecialchars($searchQuery ?? ''); ?>">
             <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Pesquisar</button>
         </form>
     </div>
+</div>
             <!-- Tabela de Matrículas -->
             <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
                 <h2 class="text-2xl font-semibold mb-4">Matrículas do Curso</h2>
