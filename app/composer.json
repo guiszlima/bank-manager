@@ -1,0 +1,14 @@
+{
+  "name": "vendor/bank_manager",
+  "authors": [
+    {
+      "name": "guiszlima"
+    }
+  ],
+  "require": {
+    "monolog/monolog": "^3.9"
+  },
+  "scripts": {
+    "migrate": "php migrate.php"
+  }
+}
