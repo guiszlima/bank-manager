@@ -68,7 +68,7 @@ class AuthController
                 }
     
                 if ($userModel->create($name, $email, $password)) {
-                    header("Location: /login?success=1");
+                    header("Location: /?success=1");
                     exit;
                 } else {
                     header("Location: /register?error=Erro ao criar usuário");
